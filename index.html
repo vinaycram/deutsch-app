@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Deutsch mit Kira">
+  <title>Deutsch mit Kira 🇩🇪</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      --bg: #0f0e17;
+      --card-bg: #1a1a2e;
+      --card-front: #16213e;
+      --accent1: #ff6b6b;
+      --accent2: #ffd93d;
+      --accent3: #6bcb77;
+      --accent4: #4d96ff;
+      --accent5: #c77dff;
+      --text: #fffffe;
+      --text-muted: #a7a9be;
+      --radius: 20px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-x: hidden;
+    }
+
+    /* ── HOME ─────────────────────────────── */
+    #home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, #1a1a4e 0%, #0f0e17 70%);
+    }
+
+    .flag { font-size: 64px; margin-bottom: 8px; }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 48px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .stat-box {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px 20px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent2);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .home-btn {
+      width: 100%;
+      max-width: 320px;
+      padding: 18px 24px;
+      border-radius: var(--radius);
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: transform 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .home-btn:active { transform: scale(0.97); opacity: 0.9; }
+
+    .btn-cards {
+      background: linear-gradient(135deg, #4d96ff, #c77dff);
+      color: white;
+    }
+
+    .btn-test {
+      background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+      color: #0f0e17;
+    }
+
+    .btn-icon { font-size: 1.4rem; }
+
+    /* ── CARDS ─────────────────────────────── */
+    #cards-screen, #test-screen, #results-screen {
+      display: none;
+      min-height: 100vh;
+      padding: 0;
+      flex-direction: column;
+    }
+
+    .screen-active { display: flex !important; }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: rgba(15,14,23,0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--accent4);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+
+    .top-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .progress-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Cards */
+    .cards-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 20px;
+      gap: 20px;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      max-width: 360px;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent4), var(--accent5));
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .card-wrap {
+      perspective: 1000px;
+      width: 100%;
+      max-width: 360px;
+      height: 240px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-inner.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 1px solid rgba(77,150,255,0.3);
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #1a2e1a, #162116);
+      border: 1px solid rgba(107,203,119,0.3);
+      transform: rotateY(180deg);
+    }
+
+    .card-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent4);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .card-german {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .card-article {
+      font-size: 1rem;
+      color: var(--accent2);
+      font-weight: 600;
+    }
+
+    .card-tap-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    .card-english {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent3);
+      margin-bottom: 8px;
+    }
+
+    .card-article-back {
+      font-size: 1rem;
+      color: var(--accent2);
+    }
+
+    .card-nav {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .nav-btn:active { transform: scale(0.96); }
+
+    .btn-prev { background: rgba(255,255,255,0.08); color: var(--text); }
+    .btn-next { background: linear-gradient(135deg, var(--accent4), var(--accent5)); color: white; }
+
+    .card-counter {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ── TEST ─────────────────────────────── */
+    .test-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      gap: 16px;
+    }
+
+    .question-box {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .question-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent5);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .question-word {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .option-btn {
+      padding: 16px 12px;
+      border-radius: 14px;
+      border: 2px solid rgba(255,255,255,0.08);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .option-btn:active { transform: scale(0.97); }
+    .option-btn.correct { background: rgba(107,203,119,0.2); border-color: var(--accent3); color: var(--accent3); }
+    .option-btn.wrong { background: rgba(255,107,107,0.2); border-color: var(--accent1); color: var(--accent1); }
+    .option-btn.reveal { background: rgba(107,203,119,0.1); border-color: rgba(107,203,119,0.4); }
+    .option-btn:disabled { cursor: default; }
+
+    .test-progress {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ── RESULTS ───────────────────────────── */
+    .results-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .results-emoji { font-size: 64px; }
+
+    .results-score {
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .results-label {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: -12px;
+    }
+
+    .wrong-list {
+      width: 100%;
+      max-width: 360px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: left;
+    }
+
+    .wrong-list h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent1);
+      margin-bottom: 12px;
+    }
+
+    .wrong-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem;
+    }
+
+    .wrong-item:last-child { border-bottom: none; }
+    .wrong-de { color: var(--text); font-weight: 600; }
+    .wrong-en { color: var(--text-muted); }
+
+    .results-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .results-btn {
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-retry { background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #0f0e17; }
+    .btn-home-again { background: rgba(255,255,255,0.08); color: var(--text); }
+  </style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home">
+  <div class="flag">🇩🇪</div>
+  <h1>Deutsch mit Kira</h1>
+  <p class="subtitle">Vinay's Vokabeln — powered by Claude</p>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" id="total-words">0</div>
+      <div class="stat-label">Wörter</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="tested-words">0</div>
+      <div class="stat-label">Getestet</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="wrong-count">0</div>
+      <div class="stat-label">Falsch</div>
+    </div>
+  </div>
+
+  <button class="home-btn btn-cards" onclick="startCards()">
+    <span class="btn-icon">📚</span>
+    Karten durchsehen
+  </button>
+  <button class="home-btn btn-test" onclick="startTest()">
+    <span class="btn-icon">🎯</span>
+    Test starten
+  </button>
+</div>
+
+<!-- CARDS SCREEN -->
+<div id="cards-screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">← Zurück</button>
+    <span class="top-title">📚 Vokabelkarten</span>
+    <span class="progress-text" id="card-progress-text">1 / 20</span>
+  </div>
+  <div class="cards-container">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="card-progress-bar" style="width:5%"></div>
+    </div>
+    <div class="card-wrap" onclick="flipCard()">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face card-front">
+          <div class="card-category" id="card-cat">Category</div>
+          <div class="card-german" id="card-german">Wort</div>
+          <div class="card-tap-hint">Tippe zum Umdrehen 👆</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-category" id="card-cat-back">Category</div>
+          <div class="card-english" id="card-english">English</div>
+          <div class="card-article-back" id="card-article-back"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <button class="nav-btn btn-prev" onclick="prevCard()">← Zurück</button>
+      <button class="nav-btn btn-next" onclick="nextCard()">Weiter →</button>
+    </div>
+    <div class="card-counter" id="card-counter"></div>
+  </div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">← Zurück</button>
+    <span class="top-title">🎯 Test</span>
+    <span class="progress-text" id="test-progress-text">1 / 40</span>
+  </div>
+  <div class="test-container">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="test-progress-bar" style="width:0%"></div>
+    </div>
+    <div class="question-box">
+      <div class="question-type" id="q-type">Bedeutung</div>
+      <div class="question-word" id="q-word">Wort</div>
+    </div>
+    <div class="options-grid" id="options-grid"></div>
+    <div class="test-progress" id="test-score-live">0 richtig von 0</div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="results-screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">← Zurück</button>
+    <span class="top-title">🏆 Ergebnis</span>
+    <span class="progress-text"></span>
+  </div>
+  <div class="results-container">
+    <div class="results-emoji" id="results-emoji">🎉</div>
+    <div class="results-score" id="results-score">0%</div>
+    <div class="results-label" id="results-label">von 40 Fragen</div>
+    <div class="wrong-list" id="wrong-list" style="display:none">
+      <h3>❌ Diese Wörter wiederholen</h3>
+      <div id="wrong-items"></div>
+    </div>
+    <div class="results-btns">
+      <button class="results-btn btn-retry" onclick="startTest()">🔄 Nochmal testen</button>
+      <button class="results-btn btn-home-again" onclick="goHome()">🏠 Startseite</button>
+    </div>
+  </div>
+</div>
+
+<script src="vocabulary.js"></script>
+<script>
+// ── STATE ──────────────────────────────────────────────
+let wrongWords = JSON.parse(localStorage.getItem('wrongWords') || '[]');
+let testedWords = JSON.parse(localStorage.getItem('testedWords') || '[]');
+let sessionWrong = [];
+let sessionCorrect = 0;
+let currentCardIndex = 0;
+let cardDeck = [];
+let testQuestions = [];
+let currentQ = 0;
+let answered = false;
+
+// ── INIT ───────────────────────────────────────────────
+function init() {
+  document.getElementById('total-words').textContent = VOCABULARY.length;
+  document.getElementById('tested-words').textContent = testedWords.length;
+  document.getElementById('wrong-count').textContent = wrongWords.length;
+}
+
+// ── NAVIGATION ─────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('#home, #cards-screen, #test-screen, #results-screen').forEach(s => {
+    s.style.display = 'none';
+    s.classList.remove('screen-active');
+  });
+  const el = document.getElementById(id);
+  el.style.display = 'flex';
+  el.classList.add('screen-active');
+}
+
+function goHome() {
+  showScreen('home');
+  init();
+}
+
+// ── CARDS ──────────────────────────────────────────────
+function startCards() {
+  cardDeck = shuffle([...VOCABULARY]).slice(0, 20);
+  currentCardIndex = 0;
+  showScreen('cards-screen');
+  renderCard();
+}
+
+function renderCard() {
+  const card = cardDeck[currentCardIndex];
+  const total = cardDeck.length;
+  document.getElementById('card-inner').classList.remove('flipped');
+  document.getElementById('card-cat').textContent = card.category;
+  document.getElementById('card-cat-back').textContent = card.category;
+  document.getElementById('card-german').textContent = card.german;
+  document.getElementById('card-english').textContent = card.english;
+  document.getElementById('card-article-back').textContent = card.article ? `Artikel: ${card.article}` : '';
+  document.getElementById('card-progress-text').textContent = `${currentCardIndex + 1} / ${total}`;
+  document.getElementById('card-progress-bar').style.width = `${((currentCardIndex + 1) / total) * 100}%`;
+  document.getElementById('card-counter').textContent = `Karte ${currentCardIndex + 1} von ${total}`;
+}
+
+function flipCard() {
+  document.getElementById('card-inner').classList.toggle('flipped');
+}
+
+function nextCard() {
+  if (currentCardIndex < cardDeck.length - 1) {
+    currentCardIndex++;
+    renderCard();
+  }
+}
+
+function prevCard() {
+  if (currentCardIndex > 0) {
+    currentCardIndex--;
+    renderCard();
+  }
+}
+
+// ── TEST ───────────────────────────────────────────────
+function buildTestDeck() {
+  const wrongSet = VOCABULARY.filter(w => wrongWords.includes(w.id));
+  const newSet = VOCABULARY.filter(w => !testedWords.includes(w.id));
+  const hardSet = VOCABULARY.filter(w => testedWords.includes(w.id) && !wrongWords.includes(w.id));
+
+  let deck = [];
+  // 50% wrong, 25% new, 25% hard/old
+  const target = 20;
+  const wrongCount = Math.min(Math.round(target * 0.5), wrongSet.length);
+  const newCount = Math.min(Math.round(target * 0.25), newSet.length);
+  const hardCount = Math.min(target - wrongCount - newCount, hardSet.length);
+
+  deck = [
+    ...shuffle(wrongSet).slice(0, wrongCount),
+    ...shuffle(newSet).slice(0, newCount),
+    ...shuffle(hardSet).slice(0, hardCount),
+  ];
+
+  // Fill up if needed
+  if (deck.length < target) {
+    const remaining = VOCABULARY.filter(w => !deck.find(d => d.id === w.id));
+    deck = [...deck, ...shuffle(remaining).slice(0, target - deck.length)];
+  }
+
+  return shuffle(deck).slice(0, target);
+}
+
+function buildQuestions(deck) {
+  const questions = [];
+  for (const word of deck) {
+    // Q1: Meaning
+    questions.push({ type: 'meaning', word, correct: word.english });
+    // Q2: Article (only for nouns)
+    if (word.article) {
+      questions.push({ type: 'article', word, correct: word.article });
+    }
+  }
+  return shuffle(questions);
+}
+
+function getWrongOptions(correct, type, allWords) {
+  let pool;
+  if (type === 'article') {
+    pool = ['der', 'die', 'das'].filter(a => a !== correct);
+    return shuffle(pool).slice(0, 3);
+  } else {
+    pool = allWords
+      .filter(w => w.english !== correct)
+      .map(w => w.english);
+    return shuffle(pool).slice(0, 3);
+  }
+}
+
+function startTest() {
+  const deck = buildTestDeck();
+  testQuestions = buildQuestions(deck);
+  currentQ = 0;
+  sessionWrong = [];
+  sessionCorrect = 0;
+  answered = false;
+  showScreen('test-screen');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = testQuestions[currentQ];
+  const total = testQuestions.length;
+
+  document.getElementById('test-progress-text').textContent = `${currentQ + 1} / ${total}`;
+  document.getElementById('test-progress-bar').style.width = `${((currentQ + 1) / total) * 100}%`;
+  document.getElementById('test-score-live').textContent = `${sessionCorrect} richtig von ${currentQ}`;
+
+  if (q.type === 'meaning') {
+    document.getElementById('q-type').textContent = '🇩🇪 Was bedeutet dieses Wort?';
+    document.getElementById('q-word').textContent = q.word.german;
+  } else {
+    document.getElementById('q-type').textContent = '📖 Welcher Artikel?';
+    document.getElementById('q-word').textContent = q.word.german.replace(/^(der|die|das)\s/i, '');
+  }
+
+  const wrongOptions = getWrongOptions(q.correct, q.type, VOCABULARY);
+  const allOptions = shuffle([q.correct, ...wrongOptions]);
+
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  allOptions.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => handleAnswer(opt, q.correct, q.word);
+    grid.appendChild(btn);
+  });
+
+  answered = false;
+}
+
+function handleAnswer(selected, correct, word) {
+  if (answered) return;
+  answered = true;
+
+  const buttons = document.querySelectorAll('.option-btn');
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correct) btn.classList.add('correct');
+    else if (btn.textContent === selected) btn.classList.add('wrong');
+  });
+
+  if (selected === correct) {
+    sessionCorrect++;
+    // Remove from wrong list if correct
+    wrongWords = wrongWords.filter(id => id !== word.id);
+  } else {
+    if (!wrongWords.includes(word.id)) wrongWords.push(word.id);
+    if (!sessionWrong.find(w => w.id === word.id)) sessionWrong.push(word);
+  }
+
+  if (!testedWords.includes(word.id)) testedWords.push(word.id);
+  localStorage.setItem('wrongWords', JSON.stringify(wrongWords));
+  localStorage.setItem('testedWords', JSON.stringify(testedWords));
+
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < testQuestions.length) {
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  }, 900);
+}
+
+function showResults() {
+  const total = testQuestions.length;
+  const pct = Math.round((sessionCorrect / total) * 100);
+  document.getElementById('results-score').textContent = `${pct}%`;
+  document.getElementById('results-label').textContent = `${sessionCorrect} von ${total} richtig`;
+
+  let emoji = '🎉';
+  if (pct < 50) emoji = '😅';
+  else if (pct < 70) emoji = '💪';
+  else if (pct < 90) emoji = '🌟';
+  else emoji = '🏆';
+  document.getElementById('results-emoji').textContent = emoji;
+
+  const wrongList = document.getElementById('wrong-list');
+  const wrongItems = document.getElementById('wrong-items');
+  if (sessionWrong.length > 0) {
+    wrongList.style.display = 'block';
+    wrongItems.innerHTML = sessionWrong.map(w =>
+      `<div class="wrong-item"><span class="wrong-de">${w.german}</span><span class="wrong-en">${w.english}</span></div>`
+    ).join('');
+  } else {
+    wrongList.style.display = 'none';
+  }
+
+  showScreen('results-screen');
+}
+
+// ── UTILS ──────────────────────────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── START ─────────────────────────────────────────────
+window.addEventListener('load', () => {
+  showScreen('home');
+  init();
+});
+
+// Service worker registration
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>

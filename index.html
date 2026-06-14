@@ -363,6 +363,45 @@
     .option-btn.reveal { background: rgba(107,203,119,0.1); border-color: rgba(107,203,119,0.4); }
     .option-btn:disabled { cursor: default; }
 
+    .feedback-box {
+      display: none;
+      border-radius: 16px;
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+    }
+    .feedback-box.correct-fb {
+      background: rgba(107,203,119,0.15);
+      border: 1px solid rgba(107,203,119,0.4);
+    }
+    .feedback-box.wrong-fb {
+      background: rgba(255,107,107,0.15);
+      border: 1px solid rgba(255,107,107,0.4);
+    }
+    .feedback-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; }
+    .feedback-correct { color: #6bcb77; }
+    .feedback-wrong { color: #ff6b6b; }
+    .feedback-body { color: var(--text); font-size: 0.9rem; margin-top: 6px; }
+    .next-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent4), var(--accent5));
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      transition: transform 0.15s;
+    }
+    .next-btn:active { transform: scale(0.97); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .test-progress {
       text-align: center;
       font-size: 0.85rem;
@@ -529,6 +568,8 @@
       <div class="question-word" id="q-word">Wort</div>
     </div>
     <div class="options-grid" id="options-grid"></div>
+    <div class="feedback-box" id="feedback-box"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Weiter →</button>
     <div class="test-progress" id="test-score-live">0 richtig von 0</div>
   </div>
 </div>
@@ -732,6 +773,7 @@ function handleAnswer(selected, correct, word) {
   if (answered) return;
   answered = true;
 
+  const isCorrect = selected === correct;
   const buttons = document.querySelectorAll('.option-btn');
   buttons.forEach(btn => {
     btn.disabled = true;
@@ -739,9 +781,8 @@ function handleAnswer(selected, correct, word) {
     else if (btn.textContent === selected) btn.classList.add('wrong');
   });
 
-  if (selected === correct) {
+  if (isCorrect) {
     sessionCorrect++;
-    // Remove from wrong list if correct
     wrongWords = wrongWords.filter(id => id !== word.id);
   } else {
     if (!wrongWords.includes(word.id)) wrongWords.push(word.id);
@@ -752,14 +793,42 @@ function handleAnswer(selected, correct, word) {
   localStorage.setItem('wrongWords', JSON.stringify(wrongWords));
   localStorage.setItem('testedWords', JSON.stringify(testedWords));
 
-  setTimeout(() => {
-    currentQ++;
-    if (currentQ < testQuestions.length) {
-      renderQuestion();
+  // Show feedback
+  const q = testQuestions[currentQ];
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'block';
+  fb.className = 'feedback-box ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+
+  if (isCorrect) {
+    let context = '';
+    if (word.category === 'Reflexive Verbs') context = `Denk daran: <b>${word.german}</b> — ${word.english}`;
+    else if (word.category === 'Präteritum') context = `Präteritum: <b>${word.german}</b> = ${word.english}`;
+    else if (word.article) context = `Artikel: <b>${word.article}</b> — ${word.german} = ${word.english}`;
+    else context = `<b>${word.german}</b> = ${word.english}`;
+    fb.innerHTML = `<div class="feedback-title feedback-correct">✅ Richtig!</div><div class="feedback-body">${context}</div>`;
+  } else {
+    let explanation = '';
+    if (q.type === 'article') {
+      explanation = `Der richtige Artikel ist <b>${correct}</b>. <br>👉 <b>${word.german}</b> ist ${correct === 'der' ? 'maskulin' : correct === 'die' ? 'feminin' : 'neutrum'}.`;
     } else {
-      showResults();
+      explanation = `Die richtige Antwort ist: <b>${correct}</b>.<br>👉 <b>${word.german}</b> = ${word.english}`;
     }
-  }, 900);
+    fb.innerHTML = `<div class="feedback-title feedback-wrong">❌ Falsch!</div><div class="feedback-body">${explanation}</div>`;
+  }
+
+  document.getElementById('next-btn').style.display = 'block';
+  document.getElementById('test-score-live').textContent = \`\${sessionCorrect} richtig von \${currentQ + 1}\`;
+}
+
+function nextQuestion() {
+  document.getElementById('feedback-box').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'none';
+  currentQ++;
+  if (currentQ < testQuestions.length) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
 }
 
 function showResults() {

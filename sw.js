@@ -1,9 +1,9 @@
-const CACHE_NAME = 'deutsch-kira-v1';
+const CACHE_NAME = 'deutsch-vr-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/vocabulary.js',
-  '/manifest.json'
+  '/deutsch-app/',
+  '/deutsch-app/index.html',
+  '/deutsch-app/vocabulary.js',
+  '/deutsch-app/manifest.json'
 ];
 
 self.addEventListener('install', e => {

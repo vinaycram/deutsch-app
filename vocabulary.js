@@ -10,7 +10,7 @@ const VOCABULARY = [
   { id: 8, german: "die Opposition", english: "opposition", article: "die", category: "Politics" },
   { id: 9, german: "die Debatte", english: "debate", article: "die", category: "Politics" },
   { id: 10, german: "der Kompromiss", english: "compromise", article: "der", category: "Politics" },
-
+ 
   // From Kira's lessons - Daily Life
   { id: 11, german: "das Medium", english: "medium / means", article: "das", category: "Daily Life" },
   { id: 12, german: "die Mathematik", english: "mathematics", article: "die", category: "Daily Life" },
@@ -22,7 +22,7 @@ const VOCABULARY = [
   { id: 18, german: "verwirrend", english: "confusing", article: null, category: "Adjectives" },
   { id: 19, german: "darum", english: "that's why / therefore", article: null, category: "Connectors" },
   { id: 20, german: "das Ticket", english: "ticket", article: "das", category: "Travel" },
-
+ 
   // Football / Budapest
   { id: 21, german: "der Sieg", english: "victory", article: "der", category: "Football" },
   { id: 22, german: "unentschieden", english: "draw", article: null, category: "Football" },
@@ -35,19 +35,19 @@ const VOCABULARY = [
   { id: 29, german: "einzigartig", english: "unique", article: null, category: "Adjectives" },
   { id: 30, german: "unvergesslich", english: "unforgettable", article: null, category: "Adjectives" },
   { id: 31, german: "überzeugt", english: "convinced", article: null, category: "Adjectives" },
-
+ 
   // Travel
   { id: 32, german: "der Zwischenstopp", english: "layover", article: "der", category: "Travel" },
   { id: 33, german: "die Rückreise", english: "return journey", article: "die", category: "Travel" },
   { id: 34, german: "das Terminal", english: "terminal", article: "das", category: "Travel" },
   { id: 35, german: "das Geschäft", english: "shop", article: "das", category: "Daily Life" },
   { id: 36, german: "angekommen", english: "arrived", article: null, category: "Travel" },
-
+ 
   // People / Social
   { id: 37, german: "der Kellner", english: "waiter", article: "der", category: "People" },
   { id: 38, german: "der Mitarbeiter", english: "worker / employee", article: "der", category: "Work" },
   { id: 39, german: "die Bekannten", english: "acquaintances", article: "die", category: "People", plural: true },
-
+ 
   // TV / Film
   { id: 40, german: "der Untertitel", english: "subtitle", article: "der", category: "Film & TV" },
   { id: 41, german: "die Episode / die Folge", english: "episode", article: "die", category: "Film & TV" },
@@ -57,7 +57,7 @@ const VOCABULARY = [
   { id: 45, german: "der Mord", english: "murder", article: "der", category: "Film & TV" },
   { id: 46, german: "die Lawine", english: "avalanche", article: "die", category: "Nature" },
   { id: 47, german: "die Brücke", english: "bridge", article: "die", category: "Places" },
-
+ 
   // Language learning
   { id: 48, german: "das Hörverständnis", english: "listening comprehension", article: "das", category: "Language" },
   { id: 49, german: "die Dauer", english: "duration", article: "die", category: "Language" },
@@ -69,7 +69,7 @@ const VOCABULARY = [
   { id: 55, german: "außer", english: "except", article: null, category: "Connectors" },
   { id: 56, german: "unglaublich", english: "incredible / unbelievable", article: null, category: "Adjectives" },
   { id: 57, german: "der Satz", english: "sentence / phrase", article: "der", category: "Language" },
-
+ 
   // Feelings
   { id: 58, german: "aufgeregt", english: "excited (positive)", article: null, category: "Feelings" },
   { id: 59, german: "enttäuscht", english: "disappointed", article: null, category: "Feelings" },
@@ -77,7 +77,7 @@ const VOCABULARY = [
   { id: 61, german: "einsam", english: "lonely", article: null, category: "Feelings" },
   { id: 62, german: "beschäftigt", english: "busy", article: null, category: "Adjectives" },
   { id: 63, german: "herzzerreißend", english: "heartbreaking", article: null, category: "Feelings" },
-
+ 
   // Reflexive verbs
   { id: 64, german: "sich erinnern an", english: "to remember (+ Akk)", article: null, category: "Reflexive Verbs" },
   { id: 65, german: "sich freuen auf", english: "to look forward to (+ Akk)", article: null, category: "Reflexive Verbs" },
@@ -98,7 +98,7 @@ const VOCABULARY = [
   { id: 80, german: "sich fühlen", english: "to feel", article: null, category: "Reflexive Verbs" },
   { id: 81, german: "sich entspannen", english: "to relax", article: null, category: "Reflexive Verbs" },
   { id: 82, german: "sich verbessern", english: "to improve oneself", article: null, category: "Reflexive Verbs" },
-
+ 
   // Präteritum forms
   { id: 83, german: "war (sein)", english: "was (to be) - Präteritum", article: null, category: "Präteritum" },
   { id: 84, german: "hatte (haben)", english: "had (to have) - Präteritum", article: null, category: "Präteritum" },
@@ -113,7 +113,7 @@ const VOCABULARY = [
   { id: 93, german: "traf (treffen)", english: "met (to meet) - Präteritum", article: null, category: "Präteritum" },
   { id: 94, german: "dachte (denken)", english: "thought (to think) - Präteritum", article: null, category: "Präteritum" },
   { id: 95, german: "wusste (wissen)", english: "knew (to know) - Präteritum", article: null, category: "Präteritum" },
-
+ 
   // Useful nouns
   { id: 96, german: "die Kindheit", english: "childhood", article: "die", category: "Life" },
   { id: 97, german: "der Alltag", english: "daily life / everyday life", article: "der", category: "Life" },
@@ -130,7 +130,7 @@ const VOCABULARY = [
   { id: 108, german: "der Zwischenstopp", english: "layover / stopover", article: "der", category: "Travel" },
   { id: 109, german: "die Übernachtung", english: "overnight stay", article: "die", category: "Travel" },
   { id: 110, german: "die Donau", english: "the Danube (river)", article: "die", category: "Places" },
-
+ 
   // Useful adjectives & adverbs
   { id: 111, german: "kürzlich", english: "recently", article: null, category: "Adverbs" },
   { id: 112, german: "mindestens", english: "at least", article: null, category: "Adverbs" },
@@ -148,7 +148,7 @@ const VOCABULARY = [
   { id: 124, german: "mächtig", english: "powerful", article: null, category: "Adjectives" },
   { id: 125, german: "trocken", english: "dry / boring", article: null, category: "Adjectives" },
   { id: 126, german: "leidenschaftlich", english: "passionate", article: null, category: "Adjectives" },
-
+ 
   // Useful verbs
   { id: 127, german: "erreichen", english: "to reach / achieve", article: null, category: "Verbs" },
   { id: 128, german: "übernachten", english: "to stay overnight", article: null, category: "Verbs" },
@@ -158,14 +158,84 @@ const VOCABULARY = [
   { id: 132, german: "verarbeiten", english: "to process", article: null, category: "Verbs" },
   { id: 133, german: "sich wiederholen", english: "to repeat", article: null, category: "Verbs" },
   { id: 134, german: "sich kleiden", english: "to dress oneself", article: null, category: "Verbs" },
-
+ 
   // Kira's aus/um distinction
   { id: 135, german: "ankommen", english: "to arrive", article: null, category: "Verbs" },
   { id: 136, german: "umkommen", english: "to die / perish (informal: to be overwhelmed)", article: null, category: "Verbs" },
-
+ 
   // WM / Sport
   { id: 137, german: "die WM", english: "World Cup (Weltmeisterschaft)", article: "die", category: "Football" },
   { id: 138, german: "der Alarm", english: "alarm", article: "der", category: "Daily Life" },
   { id: 139, german: "überzeugt", english: "convinced", article: null, category: "Adjectives" },
   { id: 140, german: "der Mitarbeiter", english: "employee / worker", article: "der", category: "Work" },
+ 
+  // More reflexive verbs + prepositions (Kira's "Leben im Ausland" list)
+  { id: 141, german: "vermissen", english: "to miss (NOT reflexive — ich vermisse dich)", article: null, category: "Verbs" },
+  { id: 142, german: "sich verhalten", english: "to behave", article: null, category: "Reflexive Verbs" },
+  { id: 143, german: "sich stressen", english: "to stress (oneself) out", article: null, category: "Reflexive Verbs" },
+  { id: 144, german: "sich vorstellen", english: "to imagine / introduce oneself (+ bei for professional intro)", article: null, category: "Reflexive Verbs" },
+  { id: 145, german: "sich sorgen um", english: "to worry about (+ Akk)", article: null, category: "Reflexive Verbs" },
+  { id: 146, german: "sich treffen mit", english: "to meet with (+ Dat)", article: null, category: "Reflexive Verbs" },
+  { id: 147, german: "sich verabschieden von", english: "to say goodbye to (+ Dat)", article: null, category: "Reflexive Verbs" },
+  { id: 148, german: "sich ärgern über", english: "to be annoyed about (+ Akk)", article: null, category: "Reflexive Verbs" },
+  { id: 149, german: "sich schämen für", english: "to be ashamed of (+ Akk)", article: null, category: "Reflexive Verbs" },
+  { id: 150, german: "sich wohlfühlen", english: "to feel comfortable / good", article: null, category: "Reflexive Verbs" },
+ 
+  // Life abroad theme (Kira's homework)
+  { id: 151, german: "der Umzug", english: "the move (relocation)", article: "der", category: "Life Abroad" },
+  { id: 152, german: "umziehen", english: "to move (house/country) - separable, takes sein", article: null, category: "Life Abroad" },
+  { id: 153, german: "die Heimat", english: "home / homeland", article: "die", category: "Life Abroad" },
+  { id: 154, german: "der Ausländer", english: "foreigner", article: "der", category: "Life Abroad" },
+  { id: 155, german: "die Bürokratie", english: "bureaucracy", article: "die", category: "Life Abroad" },
+  { id: 156, german: "die Diskriminierung", english: "discrimination", article: "die", category: "Life Abroad" },
+  { id: 157, german: "die Lebensqualität", english: "quality of life", article: "die", category: "Life Abroad" },
+  { id: 158, german: "die Perspektive", english: "perspective / prospect", article: "die", category: "Life Abroad" },
+  { id: 159, german: "unabhängig", english: "independent", article: null, category: "Adjectives" },
+  { id: 160, german: "selbstständig", english: "self-reliant / independent", article: null, category: "Adjectives" },
+  { id: 161, german: "die Persönlichkeit", english: "personality", article: "die", category: "Life Abroad" },
+  { id: 162, german: "die Umgebung", english: "surroundings / environment (local)", article: "die", category: "Daily Life" },
+  { id: 163, german: "die Umwelt", english: "environment (nature/ecology)", article: "die", category: "Daily Life" },
+ 
+  // Connectors & small but tricky words
+  { id: 164, german: "trotz", english: "despite (+ Genitiv, preposition)", article: null, category: "Connectors" },
+  { id: 165, german: "wegen", english: "because of (+ Genitiv, preposition)", article: null, category: "Connectors" },
+  { id: 166, german: "während", english: "during (+ Genitiv, preposition)", article: null, category: "Connectors" },
+  { id: 167, german: "danach", english: "after that / afterward (time sequence)", article: null, category: "Connectors" },
+  { id: 168, german: "deshalb", english: "therefore / that's why (cause-effect)", article: null, category: "Connectors" },
+  { id: 169, german: "jeder", english: "everyone / everybody", article: null, category: "Connectors" },
+  { id: 170, german: "jemand", english: "someone / somebody", article: null, category: "Connectors" },
+  { id: 171, german: "andere", english: "others (Nom/Akk) / anderen (Dat)", article: null, category: "Connectors" },
+ 
+  // Präteritum (irregular verbs, ich-form) — Budapest essay set
+  { id: 172, german: "flog (fliegen)", english: "flew (to fly) - Präteritum", article: null, category: "Präteritum" },
+  { id: 173, german: "ging (gehen)", english: "went (to go) - Präteritum", article: null, category: "Präteritum" },
+  { id: 174, german: "sah (sehen)", english: "saw (to see) - Präteritum", article: null, category: "Präteritum" },
+  { id: 175, german: "stand (stehen)", english: "stood (to stand) - Präteritum", article: null, category: "Präteritum" },
+  { id: 176, german: "saß (sitzen)", english: "sat (to sit) - Präteritum", article: null, category: "Präteritum" },
+  { id: 177, german: "trank (trinken)", english: "drank (to drink) - Präteritum", article: null, category: "Präteritum" },
+  { id: 178, german: "aß (essen)", english: "ate (to eat) - Präteritum", article: null, category: "Präteritum" },
+  { id: 179, german: "schoss (schießen)", english: "shot (to shoot) - Präteritum", article: null, category: "Präteritum" },
+  { id: 180, german: "begann (beginnen)", english: "began (to begin) - Präteritum", article: null, category: "Präteritum" },
+  { id: 181, german: "endete (enden)", english: "ended (to end) - Präteritum", article: null, category: "Präteritum" },
+  { id: 182, german: "fühlte (fühlen)", english: "felt (to feel) - Präteritum", article: null, category: "Präteritum" },
+  { id: 183, german: "sang (singen)", english: "sang (to sing) - Präteritum", article: null, category: "Präteritum" },
+  { id: 184, german: "hörte (hören)", english: "heard (to hear) - Präteritum", article: null, category: "Präteritum" },
+  { id: 185, german: "freute (freuen)", english: "was happy / looked forward - Präteritum", article: null, category: "Präteritum" },
+  { id: 186, german: "lief (laufen)", english: "ran / walked (to run) - Präteritum", article: null, category: "Präteritum" },
+  { id: 187, german: "konnte (können)", english: "could (to be able to) - Präteritum", article: null, category: "Präteritum" },
+  { id: 188, german: "wollte (wollen)", english: "wanted (to want) - Präteritum", article: null, category: "Präteritum" },
+ 
+  // Relative clauses (Relativsätze) — reference entries
+  { id: 189, german: "der / die / das (Relativpronomen Nom)", english: "who / that (subject of relative clause)", article: null, category: "Grammar Reference" },
+  { id: 190, german: "den / die / das (Relativpronomen Akk)", english: "whom / that (object of relative clause)", article: null, category: "Grammar Reference" },
+  { id: 191, german: "dem / der / dem (Relativpronomen Dat)", english: "to whom / which (after preposition)", article: null, category: "Grammar Reference" },
+ 
+  // Misc from Champions League final + general use
+  { id: 192, german: "live", english: "live (e.g. watched live)", article: null, category: "Daily Life" },
+  { id: 193, german: "das Stadion", english: "stadium", article: "das", category: "Football" },
+  { id: 194, german: "das Tor", english: "goal", article: "das", category: "Football" },
+  { id: 195, german: "die Reihe", english: "row", article: "die", category: "Football" },
+  { id: 196, german: "produktiv", english: "productive", article: null, category: "Adjectives" },
+  { id: 197, german: "der Gedanke", english: "thought (plural: die Gedanken)", article: "der", category: "Daily Life" },
 ];
+ 
